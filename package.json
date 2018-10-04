@@ -1,29 +1,58 @@
 {
-  "name": "fissionjs-graphql",
+  "name": "schemaly-graphql",
   "version": "0.0.1",
-  "description": "A library to use fissionjs with graphql",
+  "description": "A library to use schemaly with graphql",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
-    "build": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "test": "jest",
+    "watch": "nodemon"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/sackrin/fissionjs-graphql.git"
+    "url": "git+https://github.com/sackrin/schemaly-graphql.git"
   },
   "author": "Hilary Osborne",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/sackrin/fissionjs-graphql/issues"
+    "url": "https://github.com/sackrin/schemaly-graphql/issues"
   },
-  "homepage": "https://github.com/sackrin/fissionjs-graphql#readme",
+  "homepage": "https://github.com/sackrin/schemaly-graphql#readme",
+  "jest": {
+    "testEnvironment": "node",
+    "setupTestFrameworkScriptFile": "./test/setup.ts",
+    "testRegex": "(/__tests__/.*|\\.(test|spec))\\.(ts|tsx|js)$",
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "/lib/"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfig": "tsconfig.json"
+      }
+    },
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js",
+      "json"
+    ]
+  },
   "devDependencies": {
     "@types/chai": "^4.1.6",
+    "@types/chai-as-promised": "^7.1.0",
     "@types/jest": "^23.3.2",
     "chai": "^4.2.0",
+    "chai-as-promised": "^7.1.1",
     "jest": "^23.6.0",
+    "nodemon": "^1.18.4",
     "prettier": "^1.14.2",
     "rimraf": "^2.6.2",
+    "ts-jest": "^23.10.3",
     "ts-node": "^7.0.0",
     "tslint": "^5.10.0",
     "tslint-config-prettier": "^1.13.0",
@@ -31,7 +60,7 @@
     "typescript": "^3.1.1"
   },
   "dependencies": {
-    "fissionjs": "^1.2.1",
+    "schemaly": "^1.2.1",
     "graphql": "^14.0.2"
   }
 }
