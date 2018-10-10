@@ -1,32 +1,17 @@
-import {
-  Field,
-  STRING,
-  ValidateAll,
-  OneOfValidator,
-  AllowPolicy,
-  GrantOne,
-  SimpleValidator
-} from 'schemaly';
+const getProfileData = () => ({
+  _id: 1221,
+  firstName: 'John',
+  surname: 'Smith',
+  company: {
+    name: 'acme co.',
+    abn: '4334344343'
+  },
+  phone: [{ number: '322332423', extension: '32' }],
+  address: [
+    { street: 'Frank St', suburb: 'Graceville', country: 'AU' },
+    { pobox: '401a', suburb: 'Sherwood', country: 'EU' },
+    { pobox: '601', suburb: 'Glenberry', country: 'US' }
+  ]
+});
 
-const getProfileFields = () => [
-  Field({
-    machine: 'title',
-    context: STRING,
-    policies: GrantOne([AllowPolicy({ scope: ['*'], roles: ['*'] })]),
-    validators: ValidateAll([OneOfValidator({ rules: ['mrs|miss|ms|mr'] })])
-  }),
-  Field({
-    machine: 'firstName',
-    context: STRING,
-    policies: GrantOne([AllowPolicy({ scope: ['*'], roles: ['*'] })]),
-    validators: ValidateAll([SimpleValidator({ rules: ['string|required'] })])
-  }),
-  Field({
-    machine: 'surname',
-    context: STRING,
-    policies: GrantOne([AllowPolicy({ scope: ['*'], roles: ['*'] })]),
-    validators: ValidateAll([SimpleValidator({ rules: ['string|required'] })])
-  })
-];
-
-export default getProfileFields;
+export default getProfileData;
