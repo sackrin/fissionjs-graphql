@@ -1,16 +1,7 @@
 import getTypeForContainer from './getTypeForContainer';
-import { Blueprint, Model, PolyType, RoleType, ScopeType } from 'schemaly';
+import { TypeHandler } from './types';
 
-type ModelTypes = Model | Blueprint | PolyType;
-
-interface GetForSchema {
-  model: ModelTypes;
-  roles: RoleType[];
-  scope: ScopeType[];
-  options: any;
-}
-
-const getForSchema = ({ model, roles, scope, options }: GetForSchema) =>
+const getForSchema = ({ model, roles, scope, options }: TypeHandler) =>
   getTypeForContainer({
     model,
     roles,

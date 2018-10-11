@@ -1,7 +1,7 @@
-import { RoleType, ScopeType } from 'schemaly';
+import { Blueprint, Model, PolyType, RoleType, ScopeType } from 'schemaly';
 
 interface TypeHandler {
-  model: any;
+  model: Model | Blueprint | PolyType;
   roles: RoleType[];
   scope: ScopeType[];
   options: any;

@@ -1,13 +1,8 @@
 import { TypeHandler } from './types';
-import { Context } from 'schemaly';
+import { Context, Model } from 'schemaly';
 
-const getTypeForSimple = async ({
-  model,
-  roles,
-  scope,
-  options
-}: TypeHandler) => {
-  const context = model.context as Context;
+const getTypeForSimple = async ({ model, roles, scope, options }: TypeHandler) => {
+  const context = (model as Model).context as Context;
   return {
     name: model.machine,
     type: options.contexts[context.code] || context.code,

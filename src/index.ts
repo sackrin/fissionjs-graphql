@@ -8,4 +8,3 @@ export { default as getTypeForContainer } from './getTypeForContainer';
 export { default as getTypeForSimple } from './getTypeForSimple';
 export { default as getUnionSubTypes } from './getUnionSubTypes';
 export { default as getUnionType } from './getUnionType';
-export { default as isPoly } from './isPoly';
