@@ -1,15 +1,18 @@
 import getObjectWithFieldsType from './getObjectWithFieldsType';
-import { RoleType, ScopeType } from 'schemaly';
+import { Blueprint, Model, Polymorphic, PolyType, RoleType, ScopeType } from 'schemaly';
+
+type ModelTypes = Model | Blueprint | PolyType;
 
 interface GetUnionType {
-  model: any;
+  model: ModelTypes;
   roles: RoleType[];
   scope: ScopeType[];
   options: any;
 }
 
 const getUnionSubTypes = async ({ model, roles, scope, options }: GetUnionType): Promise<any> => {
-  return Promise.all(model.blueprints.types.map(async (subType: any) => ({
+  const blueprints = model.blueprints as Polymorphic;
+  return Promise.all(blueprints.types.map(async (subType: any) => ({
     machine: subType.machine,
     type: await getObjectWithFieldsType({
       model: subType,

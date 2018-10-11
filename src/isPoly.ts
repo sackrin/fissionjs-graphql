@@ -1,9 +1,10 @@
-interface IsPoly {
-  model: any;
-}
+import { Blueprint, Model, Polymorphic, PolyType } from 'schemaly';
 
-const isPoly = ({ model }: IsPoly) => {
-  return !!model.blueprints.types;
+type ModelTypes = Model | Blueprint | PolyType;
+
+const isPoly = (model: ModelTypes) => {
+  const blueprints = model.blueprints as Polymorphic;
+  return blueprints.types !== undefined;
 };
 
 export default isPoly;

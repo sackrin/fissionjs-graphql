@@ -1,9 +1,18 @@
 import { GraphQLUnionType } from 'graphql';
 import getUnionSubTypes from './getUnionSubTypes';
-import { ModelWithPolymorphic, RoleType, ScopeType } from 'schemaly';
+import {
+  Blueprint,
+  Model,
+  Polymorphic,
+  PolyType,
+  RoleType,
+  ScopeType
+} from 'schemaly';
+
+type ModelTypes = Model | Blueprint | PolyType;
 
 interface GetUnionType {
-  model: ModelWithPolymorphic;
+  model: ModelTypes;
   roles: RoleType[];
   scope: ScopeType[];
   options: any;
@@ -15,7 +24,8 @@ const getUnionType = async ({ model, roles, scope, options }: GetUnionType) => {
     name: model.machine,
     types: subTypes.map((subType: any) => subType.type),
     resolveType: async values => {
-      const { machine } = model.blueprints.resolveType(values);
+      const blueprints = model.blueprints as Polymorphic;
+      const machine = blueprints.resolveType(values).machine;
       const resolvedType = subTypes.find(
         (subType: any) => subType.machine === machine
       );

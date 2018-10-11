@@ -1,28 +1,25 @@
 import {
   Blueprint,
-  Blueprints, Context,
+  Blueprints, Context, Model, ModelWithBlueprints, PolyType,
   RoleType,
   ScopeType
 } from 'schemaly';
 import { GraphQLObjectType } from 'graphql';
 import getBlueprintType from './getBlueprintType';
 
-interface ModelTypeThing {
-  machine: string;
-  context: Context;
-  blueprints: Blueprints;
-}
+type ModelTypes = Model | Blueprint | PolyType;
 
 interface GetObjectWithFieldsType {
-  model: ModelTypeThing;
+  model: ModelTypes;
   roles: RoleType[];
   scope: ScopeType[];
   options?: any;
 }
 
 const getObjectWithFieldsType = async ({ model, roles, scope, options }: GetObjectWithFieldsType) => {
-  const blueprints = model.blueprints.all();
-  const fields = await blueprints.reduce(async (currentFields: Promise<Blueprint[]>, blueprint: Blueprint) => {
+  const blueprints = model.blueprints as Blueprints;
+  const allBlueprints = blueprints.all();
+  const fields = await allBlueprints.reduce(async (currentFields: Promise<Blueprint[]>, blueprint: Blueprint) => {
     const oldFields = await currentFields;
     if (!(await blueprint.grant({ roles, scope }))) {
       return oldFields;

@@ -1,4 +1,5 @@
 import { TypeHandler } from './types';
+import { Context } from 'schemaly';
 
 const getTypeForSimple = async ({
   model,
@@ -6,12 +7,10 @@ const getTypeForSimple = async ({
   scope,
   options
 }: TypeHandler) => {
-  if (!model.context) {
-    return {};
-  }
+  const context = model.context as Context;
   return {
     name: model.machine,
-    type: options.contexts[model.context.code] || model.context.code,
+    type: options.contexts[context.code] || context.code,
     resolve: model.options.resolve
   };
 };

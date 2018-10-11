@@ -8,7 +8,7 @@ const getTypeForCollection = async ({ model, roles, scope, options }: TypeHandle
   return {
     name: model.machine,
     type: new GraphQLList(
-      !isPoly({ model })
+      !isPoly(model)
         ? await getObjectWithFieldsType({ model, roles, scope, options })
         : await getUnionType({ model, roles, scope, options })
     ),
