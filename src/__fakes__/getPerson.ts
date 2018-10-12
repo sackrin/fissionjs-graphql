@@ -1,11 +1,28 @@
-import { Schema, Fields, Field, INT, STRING, CONTAINER, COLLECTION, Poly } from 'schemaly';
-import getProfileData from './getProfileFields';
+import {
+  Schema,
+  Fields,
+  Field,
+  INT,
+  STRING,
+  CONTAINER,
+  COLLECTION,
+  Poly,
+  GrantOne,
+  DenyPolicy,
+  AllowPolicy
+} from 'schemaly';
 
-const getPerson = () =>
+const UserReadPolicies = () => GrantOne([
+  DenyPolicy({ roles: ["*"], scope: ["*"] }),
+  AllowPolicy({ roles: ["user"], scope: ["r"] }),
+  AllowPolicy({ roles: ["owner"], scope: ["r","w"] }),
+]);
+
+const getPerson = (resolveData: {[k: string]: any}) =>
   Schema({
     machine: 'person',
     scope: ['r', 'w'],
-    roles: ['user', 'owner'],
+    roles: ['user', 'owner', 'admin'],
     blueprints: Fields([
       Field({ machine: '_id', context: INT }),
       Field({ machine: 'firstName', context: STRING }),
@@ -19,7 +36,8 @@ const getPerson = () =>
         blueprints: Fields([
           Field({ machine: 'name', context: STRING }),
           Field({ machine: 'abn', context: STRING })
-        ])
+        ]),
+        policies: UserReadPolicies()
       }),
       Field({
         machine: 'phone',
@@ -27,7 +45,8 @@ const getPerson = () =>
         blueprints: Fields([
           Field({ machine: 'number', context: STRING }),
           Field({ machine: 'extension', context: STRING })
-        ])
+        ]),
+        policies: UserReadPolicies()
       }),
       Field({
         machine: 'address',
@@ -50,12 +69,13 @@ const getPerson = () =>
               Field({ machine: 'country', context: STRING })
             ]),
             matchers: [['street']]
-          })
+          }),
+        policies: UserReadPolicies()
       })
     ]),
     options: {
       resolve: () => {
-        return getProfileData();
+        return resolveData;
       }
     }
   });

@@ -3,7 +3,7 @@ import { GraphQLObjectType } from 'graphql';
 import getBlueprintType from './getBlueprintType';
 import { TypeHandler } from './types';
 
-const getObjectWithFieldsType = async ({ model, roles, scope, options }: TypeHandler) => {
+const getObjectType = async ({ model, roles, scope, options }: TypeHandler) => {
   const blueprints = model.blueprints as Blueprints;
   const allBlueprints = blueprints.all();
   const fields = await allBlueprints.reduce(
@@ -29,4 +29,4 @@ const getObjectWithFieldsType = async ({ model, roles, scope, options }: TypeHan
   });
 };
 
-export default getObjectWithFieldsType;
+export default getObjectType;

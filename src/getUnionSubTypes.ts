@@ -1,4 +1,4 @@
-import getObjectWithFieldsType from './getObjectWithFieldsType';
+import getObjectType from './getObjectType';
 import { Polymorphic } from 'schemaly';
 import { TypeHandler } from './types';
 
@@ -7,7 +7,7 @@ const getUnionSubTypes = async ({ model, roles, scope, options }: TypeHandler): 
   return Promise.all(
     blueprints.types.map(async (subType: any) => ({
       machine: subType.machine,
-      type: await getObjectWithFieldsType({
+      type: await getObjectType({
         model: subType,
         roles,
         scope,
