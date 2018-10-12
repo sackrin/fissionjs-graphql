@@ -89,16 +89,4 @@ describe('getFieldsForQuery', () => {
       }
     });
   });
-
-  // it('can resolve valid data with restricted permissions', async () => {
-  //   const fakeRecord = getProfileData();
-  //   const fakeSchemaQL = await getForSchema({
-  //     model: getPerson(fakeRecord),
-  //     roles: ['w'],
-  //     scope: ['user'],
-  //     options: {}
-  //   });
-  //   const fakeResolved = fakeSchemaQL.resolve();
-  //   expect(fakeResolved).to.deep.equal(fakeResolved);
-  // });
 });
