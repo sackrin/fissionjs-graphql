@@ -5,12 +5,9 @@ import {
   GraphQLScalarType,
   GraphQLString
 } from 'graphql';
+import { HandlerOptions } from './types';
 
-interface Options {
-  context?: { [k: string]: GraphQLScalarType };
-}
-
-const getContextMap = (options: Options): { [k: string]: GraphQLScalarType } => {
+const getContextMap = (options: HandlerOptions): { [k: string]: GraphQLScalarType } => {
   return {
     string: GraphQLString,
     int: GraphQLInt,

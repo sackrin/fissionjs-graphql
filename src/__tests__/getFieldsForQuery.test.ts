@@ -2,11 +2,11 @@ import { expect } from 'chai';
 import getPerson from '../__fakes__/getPerson';
 import getProfileData from '../__fakes__/getProfileFields';
 import { graphql, GraphQLObjectType, GraphQLSchema } from 'graphql';
-import getFieldsForQuery from '../getFieldsForQuery';
+import getTypesForQuery from '../getTypesForQuery';
 import { RoleType, ScopeType } from 'schemaly';
 
 const getSchema = async ({ roles, scope }: { roles: RoleType[]; scope: ScopeType[] }) => {
-  const fields = await getFieldsForQuery({
+  const fields = await getTypesForQuery({
     models: [getPerson(getProfileData())],
     roles,
     scope,
@@ -20,7 +20,7 @@ const getSchema = async ({ roles, scope }: { roles: RoleType[]; scope: ScopeType
   });
 };
 
-describe('getFieldsForQuery', () => {
+describe('getTypesForQuery', () => {
   it('can resolve valid data with all permissions', async () => {
     const fakeQuery = `
       query Query {

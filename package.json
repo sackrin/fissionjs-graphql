@@ -1,10 +1,11 @@
 {
   "name": "schemaly-graphql",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "A library to use schemaly with graphql",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
   "scripts": {
+    "clean": "rm -rf lib",
     "build": "tsc",
     "watch": "nodemon",
     "test": "jest"
