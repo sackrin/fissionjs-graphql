@@ -3,11 +3,19 @@ import getPerson from '../__fakes__/getPerson';
 import getProfileData from '../__fakes__/getProfileFields';
 import { graphql, GraphQLObjectType, GraphQLSchema } from 'graphql';
 import getTypesForQuery from '../getTypesForQuery';
+import getTypesForInput from '../getTypesForInput';
 import { RoleType, ScopeType } from 'schemaly';
 
 const getSchema = async ({ roles, scope }: { roles: RoleType[]; scope: ScopeType[] }) => {
-  const fields = await getTypesForQuery({
-    models: [getPerson(getProfileData())],
+  const models = [getPerson(getProfileData())];
+  const queries: any = await getTypesForQuery({
+    models,
+    roles,
+    scope,
+    options: {}
+  });
+  const mutators: any = await getTypesForInput({
+    models,
     roles,
     scope,
     options: {}
@@ -15,7 +23,19 @@ const getSchema = async ({ roles, scope }: { roles: RoleType[]; scope: ScopeType
   return new GraphQLSchema({
     query: new GraphQLObjectType({
       name: 'Query',
-      fields
+      fields: queries
+    }),
+    mutation: new GraphQLObjectType({
+      name: 'Mutations',
+      fields: () => ({
+        createPerson: {
+          type: queries.person.type,
+          args: {
+            value: { type: mutators.personInput.type }
+          },
+          resolve: () => ({ _id: 3233, firstName: 'Ryan', surname: 'BLAH' })
+        }
+      })
     })
   });
 };
@@ -58,6 +78,7 @@ describe('getTypesForQuery', () => {
       }),
       source: fakeQuery
     });
+    console.log(fakeResult);
     expect(fakeResult).to.deep.equal({ data: { person: getProfileData() } });
   });
 

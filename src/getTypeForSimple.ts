@@ -8,7 +8,7 @@ const getTypeForSimple = async ({ model, roles, scope, options }: TypeHandler) =
   return {
     name: model.machine,
     type: contexts[context.code] || context.code,
-    resolve: options.asInput ? model.options.resolve : undefined
+    resolve: options.asQuery ? model.options.resolve : undefined
   };
 };
 

@@ -13,7 +13,7 @@ const getTypesForInput = async ({ models, roles, scope, options }: GetFieldsForQ
     const oldFields = await fields;
     return {
       ...oldFields,
-      [model.machine]: await getTypeForContainer({
+      [`${model.machine}Input`]: await getTypeForContainer({
         model,
         roles,
         scope,
