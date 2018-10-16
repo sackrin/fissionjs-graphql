@@ -9,7 +9,7 @@ const getTypeForContainer = async ({ model, roles, scope, options }: TypeHandler
     type: !isPolymorphic(model)
       ? await getObjectType({ model, roles, scope, options })
       : await getUnionType({ model, roles, scope, options }),
-    resolve: options.asQuery ? model.options.resolve : undefined
+    ...(options.asQuery && { resolve: model.options.resolve })
   };
 };
 

@@ -6,13 +6,13 @@ import { isPolymorphic } from 'schemaly';
 
 const getTypeForCollection = async ({ model, roles, scope, options }: TypeHandler) => {
   return {
-    name: model.machine,
+    name: options.asQuery ? model.machine : `${model.machine}Input`,
     type: new GraphQLList(
       !isPolymorphic(model)
         ? await getObjectType({ model, roles, scope, options })
         : await getUnionType({ model, roles, scope, options })
     ),
-    resolve: options.asQuery ? model.options.resolve : undefined
+    ...(options.asQuery && { resolve: model.options.resolve })
   };
 };
 

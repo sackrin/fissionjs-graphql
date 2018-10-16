@@ -78,7 +78,6 @@ describe('getTypesForQuery', () => {
       }),
       source: fakeQuery
     });
-    console.log(fakeResult);
     expect(fakeResult).to.deep.equal({ data: { person: getProfileData() } });
   });
 

@@ -8,7 +8,8 @@
     "strict": true,
     "alwaysStrict": true,
     "allowSyntheticDefaultImports": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "typeRoots": ["node_modules/@types", "typings"]
   },
   "include": [
     "src/**/*.ts"

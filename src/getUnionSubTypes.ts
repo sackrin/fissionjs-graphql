@@ -6,7 +6,7 @@ const getUnionSubTypes = async ({ model, roles, scope, options }: TypeHandler): 
   const blueprints = model.blueprints as Polymorphic;
   return Promise.all(
     blueprints.types.map(async (subType: PolyType) => ({
-      machine: subType.machine,
+      machine: options.asQuery ? subType.machine : `${subType.machine}Input`,
       type: await getObjectType({
         model: subType,
         roles,

@@ -12,9 +12,10 @@ const getObjectType = async ({ model, roles, scope, options }: TypeHandler) => {
       if (!(await blueprint.grant({ roles, scope }))) {
         return oldFields;
       }
+      const fieldName = options.asQuery ? blueprint.machine : `${blueprint.machine}Input`;
       return {
         ...oldFields,
-        [blueprint.machine]: await getBlueprintType({
+        [fieldName]: await getBlueprintType({
           model: blueprint,
           roles,
           scope,
@@ -26,7 +27,7 @@ const getObjectType = async ({ model, roles, scope, options }: TypeHandler) => {
   );
   return options.asInput
     ? new GraphQLInputObjectType({
-        name: model.machine,
+        name: `${model.machine}Input`,
         fields
       })
     : new GraphQLObjectType({
