@@ -8,7 +8,7 @@ interface GetFieldsForQuery {
   options: any;
 }
 
-const getTypesForInput = async ({ models, roles, scope, options }: GetFieldsForQuery) => {
+const getInputTypes = async ({ models, roles, scope, options }: GetFieldsForQuery) => {
   return models.reduce(async (fields, model) => {
     const oldFields = await fields;
     return {
@@ -23,4 +23,4 @@ const getTypesForInput = async ({ models, roles, scope, options }: GetFieldsForQ
   }, Promise.resolve({}));
 };
 
-export default getTypesForInput;
+export default getInputTypes;

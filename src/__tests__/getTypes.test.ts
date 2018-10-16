@@ -2,19 +2,12 @@ import { expect } from 'chai';
 import getPerson from '../__fakes__/getPerson';
 import getProfileData from '../__fakes__/getProfileFields';
 import { graphql, GraphQLObjectType, GraphQLSchema } from 'graphql';
-import getTypesForQuery from '../getTypesForQuery';
-import getTypesForInput from '../getTypesForInput';
+import getTypes from '../getTypes';
 import { RoleType, ScopeType } from 'schemaly';
 
 const getSchema = async ({ roles, scope }: { roles: RoleType[]; scope: ScopeType[] }) => {
   const models = [getPerson(getProfileData())];
-  const queries: any = await getTypesForQuery({
-    models,
-    roles,
-    scope,
-    options: {}
-  });
-  const mutators: any = await getTypesForInput({
+  const queries: any = await getTypes({
     models,
     roles,
     scope,
@@ -24,23 +17,11 @@ const getSchema = async ({ roles, scope }: { roles: RoleType[]; scope: ScopeType
     query: new GraphQLObjectType({
       name: 'Query',
       fields: queries
-    }),
-    mutation: new GraphQLObjectType({
-      name: 'Mutations',
-      fields: () => ({
-        createPerson: {
-          type: queries.person.type,
-          args: {
-            value: { type: mutators.personInput.type }
-          },
-          resolve: () => ({ _id: 3233, firstName: 'Ryan', surname: 'BLAH' })
-        }
-      })
     })
   });
 };
 
-describe('getTypesForQuery', () => {
+describe('getTypes', () => {
   it('can resolve valid data with all permissions', async () => {
     const fakeQuery = `
       query Query {
@@ -108,30 +89,5 @@ describe('getTypesForQuery', () => {
         }
       }
     });
-  });
-
-  it('can mutate data', async () => {
-    const fakeQuery = `
-      mutation {
-        createPerson(
-        value: {
-            _id: 333232
-            firstName: "Richard"
-          }
-        ) {
-          _id
-          firstName
-          surname
-        }
-      }
-    `;
-    const fakeResult = await graphql({
-      schema: await getSchema({
-        roles: ['guest'],
-        scope: ['r', 'w']
-      }),
-      source: fakeQuery
-    });
-    console.log(fakeResult);
   });
 });
