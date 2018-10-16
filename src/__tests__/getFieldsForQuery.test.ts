@@ -109,4 +109,29 @@ describe('getTypesForQuery', () => {
       }
     });
   });
+
+  it('can mutate data', async () => {
+    const fakeQuery = `
+      mutation {
+        createPerson(
+        value: {
+            _id: 333232
+            firstName: "Richard"
+          }
+        ) {
+          _id
+          firstName
+          surname
+        }
+      }
+    `;
+    const fakeResult = await graphql({
+      schema: await getSchema({
+        roles: ['guest'],
+        scope: ['r', 'w']
+      }),
+      source: fakeQuery
+    });
+    console.log(fakeResult);
+  });
 });

@@ -12,15 +12,15 @@ const getObjectType = async ({ model, roles, scope, options }: TypeHandler) => {
       if (!(await blueprint.grant({ roles, scope }))) {
         return oldFields;
       }
-      const fieldName = options.asQuery ? blueprint.machine : `${blueprint.machine}Input`;
+      const blueprintType = await getBlueprintType({
+        model: blueprint,
+        roles,
+        scope,
+        options
+      });
       return {
         ...oldFields,
-        [fieldName]: await getBlueprintType({
-          model: blueprint,
-          roles,
-          scope,
-          options
-        })
+        ...blueprintType
       };
     },
     Promise.resolve({})

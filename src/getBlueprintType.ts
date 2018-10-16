@@ -6,11 +6,11 @@ import { TypeHandler } from './types';
 
 const getBlueprintType = async ({ model, roles, scope, options }: TypeHandler) => {
   if (isContainer(model)) {
-    return getTypeForContainer({ model, roles, scope, options });
+    return { [options.asQuery ? model.machine : `${model.machine}Input`]: await getTypeForContainer({ model, roles, scope, options }) };
   } else if (isRepeater(model)) {
-    return getTypeForCollection({ model, roles, scope, options });
+    return { [options.asQuery ? model.machine : `${model.machine}Input`]: await getTypeForCollection({ model, roles, scope, options }) };
   } else {
-    return getTypeForSimple({ model, roles, scope, options });
+    return { [model.machine]: await getTypeForSimple({ model, roles, scope, options }) };
   }
 };
 
