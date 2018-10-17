@@ -4,7 +4,20 @@ import getProfileData from '../__fakes__/getProfileFields';
 import { graphql, GraphQLObjectType, GraphQLSchema } from 'graphql';
 import getTypes from '../getTypes';
 import getInputTypes from '../getInputTypes';
-import { RoleType, ScopeType } from 'schemaly';
+import { Collision, RoleType, ScopeType } from 'schemaly';
+
+const resolveForPerson = async (data: any) => {
+  const model = getPerson(() => ({}));
+  const collider = Collision({
+    model,
+    scope: ['r'],
+    roles: ['guest']
+  });
+  return collider
+    .with(data)
+    .collide()
+    .then(collider.dump);
+};
 
 const getSchema = async ({ roles, scope }: { roles: RoleType[]; scope: ScopeType[] }) => {
   const models = [getPerson(getProfileData())];
@@ -23,7 +36,7 @@ const getSchema = async ({ roles, scope }: { roles: RoleType[]; scope: ScopeType
   return new GraphQLSchema({
     query: new GraphQLObjectType({
       name: 'Query',
-      fields: {}
+      fields: queries
     }),
     mutation: new GraphQLObjectType({
       name: 'Mutations',
@@ -33,7 +46,11 @@ const getSchema = async ({ roles, scope }: { roles: RoleType[]; scope: ScopeType
           args: {
             value: { type: mutators.personInput.type }
           },
-          resolve: () => ({ _id: 3233, firstName: 'Ryan', surname: 'BLAH' })
+          resolve: async () => {
+            const resolved = await resolveForPerson({ _id: 3233, firstName: 'Ryan', surname: 'BLAH' });
+            console.log(resolved);
+            return resolved;
+          }
         }
       })
     })
@@ -63,6 +80,6 @@ describe('getInputTypes', () => {
       }),
       source: fakeQuery
     });
-    console.log(fakeResult);
+    console.log();
   });
 });
