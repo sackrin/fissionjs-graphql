@@ -1,6 +1,6 @@
 import getObjectType from './getObjectType';
 import { Polymorphic, PolyType } from 'schemaly';
-import { TypeHandler } from './types';
+import { TypeHandler } from './Types';
 
 const getUnionSubTypes = async ({ model, roles, scope, options }: TypeHandler): Promise<any[]> => {
   const blueprints = model.blueprints as Polymorphic;

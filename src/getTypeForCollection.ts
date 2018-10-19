@@ -1,7 +1,7 @@
 import getObjectType from './getObjectType';
 import getUnionType from './getUnionType';
 import { GraphQLList } from 'graphql';
-import { TypeHandler } from './types';
+import { TypeHandler } from './Types';
 import { isPolymorphic } from 'schemaly';
 
 const getTypeForCollection = async ({ model, roles, scope, options }: TypeHandler) => {

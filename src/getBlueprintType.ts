@@ -2,7 +2,7 @@ import getTypeForSimple from './getTypeForSimple';
 import getTypeForCollection from './getTypeForCollection';
 import getTypeForContainer from './getTypeForContainer';
 import { isContainer, isRepeater } from 'schemaly';
-import { TypeHandler } from './types';
+import { TypeHandler } from './Types';
 
 const getBlueprintType = async ({ model, roles, scope, options }: TypeHandler) => {
   if (isContainer(model)) {

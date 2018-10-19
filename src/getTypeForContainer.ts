@@ -1,7 +1,7 @@
 import getObjectType from './getObjectType';
 import getUnionType from './getUnionType';
 import { isPolymorphic } from 'schemaly';
-import { TypeHandler } from './types';
+import { TypeHandler } from './Types';
 
 const getTypeForContainer = async ({ model, roles, scope, options }: TypeHandler) => {
   return {

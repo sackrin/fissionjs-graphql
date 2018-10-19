@@ -3,7 +3,7 @@ import { GraphQLUnionType } from 'graphql';
 import UnionInputType from 'graphql-union-input-type';
 import getUnionSubTypes from './getUnionSubTypes';
 import { Polymorphic } from 'schemaly';
-import { TypeHandler } from './types';
+import { TypeHandler } from './Types';
 
 const getUnionType = async ({ model, roles, scope, options }: TypeHandler) => {
   const subTypes = await getUnionSubTypes({ model, roles, scope, options });

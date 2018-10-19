@@ -9,26 +9,32 @@ import {
   Poly,
   GrantOne,
   DenyPolicy,
-  AllowPolicy
+  AllowPolicy,
+  ValidateAll,
+  SimpleValidator
 } from 'schemaly';
 
-const UserReadPolicies = () => GrantOne([
-  DenyPolicy({ roles: ["*"], scope: ["*"] }),
-  AllowPolicy({ roles: ["user"], scope: ["r"] }),
-  AllowPolicy({ roles: ["owner"], scope: ["r","w"] }),
-]);
+const UserReadPolicies = () =>
+  GrantOne([
+    DenyPolicy({ roles: ['*'], scope: ['*'] }),
+    AllowPolicy({ roles: ['user'], scope: ['r'] }),
+    AllowPolicy({ roles: ['owner'], scope: ['r', 'w'] })
+  ]);
 
-const getPerson = (resolveData: {[k: string]: any}) =>
+const RequiredFields = () => ValidateAll([SimpleValidator({ rules: ['required'] })]);
+
+const getPerson = (resolveData: { [k: string]: any }) =>
   Schema({
     machine: 'person',
     scope: ['r', 'w'],
     roles: ['user', 'owner', 'admin'],
     blueprints: Fields([
       Field({ machine: '_id', context: INT }),
-      Field({ machine: 'firstName', context: STRING }),
+      Field({ machine: 'firstName', context: STRING, validators: RequiredFields() }),
       Field({
         machine: 'surname',
-        context: STRING
+        context: STRING,
+        validators: RequiredFields()
       }),
       Field({
         machine: 'company',

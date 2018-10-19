@@ -1,7 +1,7 @@
 import { Blueprint, Blueprints } from 'schemaly';
 import { GraphQLInputObjectType, GraphQLObjectType } from 'graphql';
 import getBlueprintType from './getBlueprintType';
-import { TypeHandler } from './types';
+import { TypeHandler } from './Types';
 
 const getObjectType = async ({ model, roles, scope, options }: TypeHandler) => {
   const blueprints = model.blueprints as Blueprints;

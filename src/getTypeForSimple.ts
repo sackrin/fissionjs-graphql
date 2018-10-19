@@ -1,4 +1,4 @@
-import { TypeHandler } from './types';
+import { TypeHandler } from './Types';
 import { Context, Model } from 'schemaly';
 import getContextMap from './getContextMap';
 

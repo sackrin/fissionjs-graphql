@@ -1,4 +1,4 @@
-export * from './types';
+export * from './Types';
 
 export { default as getBlueprintType } from './getBlueprintType';
 export { default as getTypes } from './getTypes';
